@@ -24,11 +24,14 @@ PARAMETERS = 'parame'
 
 SCANNER_DB = 'scanner'
 SCANNER_VALUE = 'scanner_value'
-SCANNER_VIEWS = 'scanner_views'
+SCANNER_VIEWS = 'filter_views'
 
 PARAMETERS_DB = 'parameters'
 WATCHLIST_COL_NAME = 'static_watchlists'
 INDICATORS_COL_NAME = 'indicators'
+
+f = open('scanner/fields.json')
+fields_data = json.load(f)
 
 
 def get_stock_financials_fields():
@@ -141,9 +144,191 @@ def get_available_items():
     news_db = mongoclient[NEWS]
     db_collection = news_db[NEWS_COL_NAME]
     result = dict()
-    result['stock_financials'] = get_stock_financials_fields()
-    result['indicators'] = get_indicators_fields()
-    result['ticker_details'] = get_ticker_details_fields()
+    # result['stock_financials'] = get_stock_financials_fields()
+    result['avg_bars'] = {
+        "total": [
+            "Avg # Bars In Losing Trades: All",
+            "Avg # Bars In Losing Trades: Long",
+            "Avg # Bars In Losing Trades: Short",
+            "Avg # Bars In Winning Trades: All",
+            "Avg # Bars In Winning Trades: Long",
+            "Avg # Bars In Winning Trades: Short",
+            "Avg # Bars in Trades: All",
+            "Avg # Bars in Trades: Long",
+            "Avg # Bars in Trades: Short"
+        ],
+        "defaults": [
+            "Avg # Bars In Losing Trades: All",
+            "Avg # Bars In Losing Trades: Long",
+            "Avg # Bars In Losing Trades: Short",
+            "Avg # Bars In Winning Trades: All",
+            "Avg # Bars In Winning Trades: Long",
+            "Avg # Bars In Winning Trades: Short",
+            "Avg # Bars in Trades: All",
+            "Avg # Bars in Trades: Long",
+            "Avg # Bars in Trades: Short"
+        ]
+    }
+    result['avg_losing_trade'] = {
+        "total": [
+            "Avg Losing Trade %: All",
+            "Avg Losing Trade %: Long",
+            "Avg Losing Trade %: Short",
+            "Avg Losing Trade: All",
+            "Avg Losing Trade: Long",
+            "Avg Losing Trade: Short",
+            # "Avg Winning Trade %: All",
+            # "Avg Winning Trade %: Long",
+            # "Avg Winning Trade %: Short",
+            # "Avg Winning Trade: All",
+            # "Avg Winning Trade: Long",
+            # "Avg Winning Trade: Short"
+        ],
+         "defaults": [
+            "Avg Losing Trade %: All",
+            "Avg Losing Trade %: Long",
+            "Avg Losing Trade %: Short",
+            "Avg Losing Trade: All",
+            "Avg Losing Trade: Long",
+            "Avg Losing Trade: Short",
+            # "Avg Winning Trade %: All",
+            # "Avg Winning Trade %: Long",
+            # "Avg Winning Trade %: Short",
+            # "Avg Winning Trade: All",
+            # "Avg Winning Trade: Long",
+            # "Avg Winning Trade: Short"
+         ]
+    }
+    result['avg_trade'] = {
+        "total": [
+            "Avg Trade %: All",
+            "Avg Trade %: Long",
+            "Avg Trade %: Short",
+            "Avg Trade: All",
+            "Avg Trade: Long",
+            "Avg Trade: Short",
+        ],
+        "defaults": [
+            "Avg Trade %: All",
+            "Avg Trade %: Long",
+            "Avg Trade %: Short",
+            "Avg Trade: All",
+            "Avg Trade: Long",
+            "Avg Trade: Short",
+         ]
+    }
+    result['buy_hold'] = {
+        "total": [
+            "Buy & Hold Return",
+            "Buy & Hold Return %	Commission Paid: All"
+        ],
+        "defaults": [
+            "Buy & Hold Return",
+            "Buy & Hold Return %	Commission Paid: All"
+        ]
+    }
+    result['commission_paid']     = {
+        "total": fields_data["commission_paid"],
+        "defaults": fields_data["commission_paid"]
+    }
+    result['gross_loss']     = {
+        "total": fields_data["gross_loss"],
+        "defaults": fields_data["gross_loss"]
+    }
+    result['gross_profit']     = {
+        "total": fields_data["gross_profit"],
+        "defaults": fields_data["gross_profit"]
+    }
+    result['losing_trade']     = {
+        "total": fields_data["losing_trade"],
+        "defaults": fields_data["losing_trade"]
+    }
+    result['largest']     = {
+        "total": fields_data["largest"],
+        "defaults": fields_data["largest"]
+    }
+    result['margin_calls']     = {
+        "total": fields_data["margin_calls"],
+        "defaults": fields_data["margin_calls"]
+    }
+    result['max']     = {
+        "total": fields_data["max"],
+        "defaults": fields_data["max"]
+    }
+    result['net']     = {
+        "total": fields_data["net"],
+        "defaults": fields_data["net"]
+    }
+    result['number']     = {
+        "total": fields_data["number"],
+        "defaults": fields_data["number"]
+    }
+    result['open']     = {
+        "total": fields_data["open"],
+        "defaults": fields_data["open"]
+    }
+    result['percent_profitable']     = {
+        "total": fields_data["percent_profitable"],
+        "defaults": fields_data["percent_profitable"]
+    }
+    result['profit_factor']     = {
+        "total": fields_data["profit_factor"],
+        "defaults": fields_data["profit_factor"]
+    }
+    result['ratio_avg_win']     = {
+        "total": fields_data["ratio_avg_win"],
+        "defaults": fields_data["ratio_avg_win"]
+    }
+    result['sharpe_ratio']     = {
+        "total": fields_data["sharpe_ratio"],
+        "defaults": fields_data["sharpe_ratio"]
+    }
+    result['sortino_ratio']     = {
+        "total": fields_data["sortino_ratio"],
+        "defaults": fields_data["sortino_ratio"]
+    }
+    result['total']     = {
+        "total": fields_data["total"],
+        "defaults": fields_data["total"]
+    }
+    result['take_at']     = {
+        "total": fields_data["take_at"],
+        "defaults": fields_data["take_at"]
+    }
+    result['abc_entry']     = {
+        "total": fields_data["abc_entry"],
+        "defaults": fields_data["abc_entry"]
+    }
+    result['ao_divergence']     = {
+        "total": fields_data["ao_divergence"],
+        "defaults": fields_data["ao_divergence"]
+    }
+    result['api']     = {
+        "total": fields_data["api"],
+        "defaults": fields_data["api"]
+    }
+    result['atr']     = {
+        "total": fields_data["atr"],
+        "defaults": fields_data["atr"]
+    }
+    result['activate_min']     = {
+        "total": fields_data["activate_min"],
+        "defaults": fields_data["activate_min"]
+    }
+    result['adx']     = {
+        "total": fields_data["adx"],
+        "defaults": fields_data["adx"]
+    }
+    result['alert']     = {
+        "total": fields_data["alert"],
+        "defaults": fields_data["alert"]
+    }
+    result['comment']     = {
+        "total": fields_data["comment"],
+        "defaults": fields_data["comment"]
+    }
+
+
     return result
 
 def get_multi_financials(symbols, financial_part):

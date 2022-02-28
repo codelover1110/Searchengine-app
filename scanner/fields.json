@@ -1,0 +1,136 @@
+{
+    "commission_paid": [
+        "Commission Paid: Long",
+        "Commission Paid: Short"
+    ],
+    "gross_loss": [
+        "Gross Loss %: All",
+        "Gross Loss %: Long",
+        "Gross Loss %: Short",
+        "Gross Loss: All",
+        "Gross Loss: Long",
+        "Gross Loss: Short"
+    ],
+    "gross_profit": [
+        "Gross Profit %: All",
+        "Gross Profit %: Long",
+        "Gross Profit %: Short",
+        "Gross Profit: All",
+        "Gross Profit: Long",
+        "Gross Profit: Short Largest"
+    ],
+    "losing_trade": [
+        "Losing Trade %: All Largest",
+        "Losing Trade %: Long"
+    ],
+    "largest": [
+        "Largest Losing Trade %: Short",
+        "Largest Losing Trade: All",
+        "Largest Losing Trade: Long",
+        "Largest Losing Trade: Short",
+        "Largest Winning Trade %: All",
+        "Largest Winning Trade %: Long",
+        "Largest Winning Trade %: Short",
+        "Largest Winning Trade: All",
+        "Largest Winning Trade: Long",
+        "Largest Winning Trade: Short"
+    ],
+    "margin_calls": [
+        "Margin Calls: All",
+        "Margin Calls: Long",
+        "Margin Calls: Short"
+    ],
+    "max": [
+        "Max Contracts Held: All",
+        "Max Contracts Held: Long",
+        "Max Contracts Held: Short",
+        "Max Drawdown",
+        "Max Drawdown %"
+    ],
+    "net": [
+        "Net Profit %: All",
+        "Net Profit %: Long",
+        "Net Profit %: Short",
+        "Net Profit: All",
+        "Net Profit: Long",
+        "Net Profit: Short"
+    ],
+    "number": [
+        "Number Losing Trades: All",
+        "Number Losing Trades: Long",
+        "Number Losing Trades: Short",
+        "Number Winning Trades: All",
+        "Number Winning Trades: Long",
+        "Number Winning Trades: Short"
+    ],
+    "open": [
+        "Open PL",
+        "Open PL %"
+    ],
+    "percent_profitable": [
+        "Percent Profitable: All",
+        "Percent Profitable: Long",
+        "Percent Profitable: Short"
+    ],
+    "profit_factor": [
+        "Profit Factor: All",
+        "Profit Factor: Long",
+        "Profit Factor: Short"
+    ],
+    "ratio_avg_win": [
+        "Ratio Avg Win / Avg Loss: All",
+        "Ratio Avg Win / Avg Loss: Long",
+        "Ratio Avg Win / Avg Loss: Short"
+    ],
+    "sharpe_ratio": [
+        "Sharpe Ratio"
+    ],
+    "total": [
+        "Total Closed Trades: All",
+        "Total Closed Trades: Long",
+        "Total Closed Trades: Short",
+        "Total Open Trades: All",
+        "Total Open Trades: Long",
+        "Total Open Trades: Short"
+    ],
+    "take_at": [
+        "__% to take at First TP",
+        "__% to take at Second TP",
+        "__% to take at Third TP"
+    ],
+    "abc_entry": [
+        "__ABC Entry Settings"
+    ],
+    "ao_divergence": [
+        "__AO Divergence"
+    ],
+    "api": [
+        "__API Entry - Long",
+        "__API Entry - Short",
+        "__API Exit - Long",
+        "__API Exit - Short",
+        "__API First TP - Long",
+        "__API First TP - Short",
+        "__API Second TP - Long",
+        "__API Second TP - Short"
+    ],
+    "atr": [
+        "__ATR Reversal",
+        "__ATR Trailing Stop Multiplier",
+        "__ATR Trailing Stop Source",
+        "__ATR length"
+    ],
+    "activate_min": [
+        "__Activate Min Risk:Reward?"
+    ],
+    "adx": [
+        "__Adx"
+    ],
+    "alert": [
+        "__Alert Frequency"
+    ],
+    "comment": [
+        "comment"
+    ]
+
+}

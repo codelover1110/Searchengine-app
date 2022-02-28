@@ -17,7 +17,7 @@ import { useAuth } from 'contexts/authContext';
 import disableScroll from 'disable-scroll';
 import WatchListItem from 'components/WatchListItem/WatchListItem'
 import {
-  saveScannerAllViewData, getScannerAllViewData
+  saveScannerAllViewData, getScannerAllViewData, getStockModalData
 } from 'api/Api';
 
 const WatchList = (props) => {
