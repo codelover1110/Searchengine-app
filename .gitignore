@@ -1,0 +1,11 @@
+node_modules/
+*.log
+*.pot
+*.pyc
+
+__pycache__/
+*/__pycache__/
+
+frontend/.env
+frontend/yarn.lock
+frontend/package-lock.json
