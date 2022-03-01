@@ -57,6 +57,7 @@ urlpatterns = [
     path('scanner/ticker_news_fields/', scanner_view.ticker_news_fields, name='ticker-news-fields'),
     path('scanner/ticker_details_fields/', scanner_view.ticker_details_fields, name='ticker-details-fields'),
     path('scanner/available_items/', scanner_view.available_items, name='available-items'),
+    path('scanner/get_searching_data/', scanner_view.get_searching_data, name='get-searching-data'),
     path('scanner/multi_financials/', scanner_view.multi_financials, name='multi-financials'),
     path('scanner/save_scanner_views/', scanner_view.save_scanner_views, name='save-scanner-views'),
     path('scanner/scanner_views/', scanner_view.scanner_views, name='scanner-views'),

@@ -85,6 +85,9 @@
     "sharpe_ratio": [
         "Sharpe Ratio"
     ],
+    "sortino_ratio": [
+        "Sortino Ratio"
+    ],
     "total": [
         "Total Closed Trades: All",
         "Total Closed Trades: Long",

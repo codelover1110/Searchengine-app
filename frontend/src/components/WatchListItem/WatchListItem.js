@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { Button, Input } from 'reactstrap'
 import Modal from 'react-bootstrap/Modal'
 // import BarChart from 'components/FinancialDashboard/SmallBarChart';
@@ -6,100 +6,32 @@ import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import WatchListEditColumnWidget from 'components/WatchListEditColumnWidget/WatchListEditColumnWidget'
 import './WatchListItem.css'
 import Select from 'react-select'
+
+import { useCsvDownloadUpdate } from "contexts/CsvDownloadContext"
+
+import { defaultFields, defaultItmes } from '../WatchListEditColumnWidget/components/modal/nodes'
+import ButtonCsvDownload from 'components/ButtonCsvDownload'
+import {useDatatableLoading, useDatatable, usePagination, usePaginationUpdate} from "contexts/DatatableContext"
 import {
-  getMultiFinancials, getScannerViewData, saveScannerView, getWatchListAll, getStockModalData
+  getSearchingData
 } from 'api/Api';
 
-import { defaultFields } from '../WatchListEditColumnWidget/components/modal/nodes'
-import ButtonCsvDownload from 'components/ButtonCsvDownload'
+import { CSVLink } from "react-csv"
+
+import { MDBDataTableV5 } from 'mdbreact';
 
 const WatchListItem = (props) => {
-  const { allViewData, setAllViewData } = props;
   const [isLoadedWatchListOptions, setIsLoadedWatchListOptions] = useState(true)
-  const [isConnected, setIsConnected] = useState(false)
   const [selectedColumns, setSelectedColumns] = useState(
-    [
-      // {
-      //   label: "Indicators",
-      //   value: "parent_value_2",
-      //   children: [
-      //     // {
-      //     //     label: "rsi",
-      //     //     value: "child_value_2_1",
-      //     //     default: true
-      //     // },
-      //     // {
-      //     //     label: "rsi2",
-      //     //     value: "child_value_2_2",
-      //     //     default: true
-      //     // },
-      //     // {
-      //     //     label: "rsi3",
-      //     //     value: "child_value_2_3",
-      //     //     default: false
-      //     // },
-      //     // {
-      //     //     label: "heik",
-      //     //     value: "child_value_2_4",
-      //     //     default: false
-      //     // },
-      //     // {
-      //     //     label: "heik2",
-      //     //     value: "child_value_2_5",
-      //     //     default: false
-      //     // }
-      //   ],
-      //   "default": true
-      // }
-    ]
+    []
   );
 
-  const [chartMultiData, setChartMultiData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [ws, setWs] = useState(null);
   const [isOpenedEditColumnWidget, setIsOpenedEditColumnWidget] = useState(false)
-  const [selectedWatchList, setSelectedWatchList] = useState(null)
-  const [selectedWatchListOptions, setSelectedWatchListOptions] = useState([])
-  const [selectedAggregationType, setSelectedAggregationType] = useState('QA');
   const [isUpdatedCols, setIsUpdatedCols] = useState(false)
   const [columnItems, setColumnItems] = useState([])
-  const [initColumnItems] = useState([
-    {
-      value: 'symbol',
-      label: 'symbol',
-      width: 100,
-    },
-  ])
-  const [isUpdatedWatchList, setIsUpdatedWatchList] = useState(false);
-  const [selectedSymbols, setSelectedSymbols] = useState([])
+  const [totalHeader, setTotalHeader] = useState([])
 
-  const [columns, setColumns] = useState([
-    {
-      value: 'symbol',
-      label: 'symbol',
-      width: 100,
-    },
-    {
-      value: 'chart',
-      label: 'chart',
-      width: 100,
-    }
-  ]);
-
-  const [timeFrames, setTimeFrames] = useState([])
-  const [timeFrameOptions, setTimeFrameOptions] = useState([
-    {
-      value: '1d',
-      label: '1d'
-    },
-    {
-      value: '3d',
-      label: '3d'
-    },
-  ])
-
-  const [watchListData, setWatchListData] = useState([])
-  const [watchListInitData, setWatchListInitData] = useState([])
 
   const handleColumnsChange = () => {
     setIsOpenedEditColumnWidget(true)
@@ -107,35 +39,97 @@ const WatchListItem = (props) => {
 
   const handleSearching = () => {
     console.log("searching===========")
-    // console.log(selectedColumns)
+    console.log(selectedColumns)
   }
 
   const handleModalClose = () => {
     setIsOpenedEditColumnWidget(false)
   }
 
-  const loadWatchListOptions = (useCallback(async () => {
-    try {
-      const data = await getWatchListAll()
-      const result = data.result.map((o) => ({
-        value: o.name,
-        label: o.name
-      }))
-      setSelectedWatchListOptions(result)
-      setSelectedWatchList(result[0])
-    } catch (e) {
-      console.log(e)
-    }
-  }, []))
   useEffect(() => {
-    loadWatchListOptions()
     setIsLoadedWatchListOptions(true)
+    loadSearchingData()
   }, [])
+
+  const loadSearchingData =  async () => {
+    const result = await getSearchingData();
+    if (!result.success || result.data == undefined) return;
+    setTotalHeader(result.data.header)
+    let headerData = filterTableData(defaultFields)
+    const tableHeader = await hearder_columns(headerData);
+    let bodyData = result.data.rows
+    bodyData.forEach(function (row, index) {
+      for (let item in row) {
+        if (!headerData.includes(item)) {
+          delete bodyData[index][item]
+        }
+      }
+    });
+    setDatatable({
+      columns: tableHeader,
+      rows:bodyData
+    })
+    
+  }
+
+  const filterTableData = (filterData) => {
+    let filterItems = []
+    filterData.forEach(function (itemTree, index) {
+      if (itemTree.default) {
+        itemTree.children.forEach(function (item, index) {
+          filterItems.push(item.label)
+        });
+      }
+    });
+    return filterItems
+  }
+
+  const [datatable, setDatatable] = React.useState({
+    columns: [],
+    rows: []
+  })
+
+  // const [, setLoadingData] = useDatatableLoading()
+
+  const updateCsvDownload = useCsvDownloadUpdate();
+
+  // const [, setDatatable] = useDatatable({
+  //   columns: hearder_columns,
+  //   rows: [
+  //   ],
+  // });
+
+  const hearder_columns = async (headerData) => {
+    let table_header = []
+    headerData.map(item => {
+      if (item == 'Avg # Bars In Losing Trades: All') {
+        table_header.push({
+          label: 'Avg # Bars In Losing Trades: All',
+          field: 'Avg # Bars In Losing Trades: All',
+          width: 300,
+          attributes: {
+            'aria-controls': 'DataTable',
+            'aria-label': 'Avg # Bars In Losing Trades: All',
+          }
+        })
+      } else {
+        table_header.push({
+          label: item,
+          field: item,
+          width: 300,
+        })
+      }
+    })
+
+    return table_header
+  }
 
   useEffect(() => {
     const getScannerAvailableFields = async () => {
       setSelectedColumns(defaultFields)
     }
+
+    console.log(defaultFields)
 
     if (isLoadedWatchListOptions) {
       getScannerAvailableFields()
@@ -162,26 +156,6 @@ const WatchListItem = (props) => {
     setIsUpdatedCols(!isUpdatedCols)
     setColumnItems(cols)
     setSelectedColumns(columns)
-    if (isConnected) {
-      const symbols = selectedSymbols.map((o) => o.value)
-
-      const content = {
-        action: 'change_fields',
-        chart_number: props.chart_number,
-        symbols,
-        symbol_type: (selectedWatchList.value === 'crypto' || selectedWatchList.value === 'bigCryptos') ? 'crypto' : 'stock',
-        fields: colObjects,
-      }
-
-      allViewData.forEach(view => {
-        if (view.chart_number === props.chart_number) {
-          view.symbols = content.symbols
-          view.fields = [...columns]
-        }
-      })
-
-      ws.send(JSON.stringify(content));
-    }
   }
 
   return (
@@ -211,47 +185,19 @@ const WatchListItem = (props) => {
           >
             change columns
           </Button>
+          
+        </div>
+        <div className={"d-flex align-items-center"}>
+          <Button className={"btn btn-primary py-2 my-0 hunter-csv-download-button"}>Csv Download</Button>
+        </div>
+        <div>
+          <MDBDataTableV5 hover entriesOptions={[10, 15]} entries={10} pagesAmount={4} data={datatable} fullPagination  />
         </div>
         <div className="watch-list-item-content">
-          {/* <MDBTable
-            hover
-            dark={true}
-            maxHeight='100%'
-            height={`${(props.chartColumn === 1 || props.chartColumn === 2) ? '800px' : '100%'}`}
-            noBottomColumns={true}
-            striped={true}
-            scrollX={true}
-            scrollY={true}
-          >
-            <MDBTableHead  className="watch-list-data-table-header">
-              <tr>
-                {columns.map((item) => (
-                  <th key={item.label} className={`${item.value === 'chart' ? 'hunter-custom-table-chart-th' : ''}`}>{item.label}</th>
-                ))}
-              </tr>
-            </MDBTableHead>
-            <MDBTableBody
-              className={"financial-table-body-1"}
-            >
-              {watchListInitData && watchListInitData.map((item) => (
-                isSelectedSymbol(item.symbol) && 
-                <tr key={`row-${item.symbol}`}>
-                  {columns.map((column) => 
-                    (
-                      <td 
-                        key={`${item.symbol}-${column.value}`}
-                        className={`hunter-financial-table-column ${column.value === 'chart' ? 'table-chart-column' : ''} ${indicatorStyle(column.value, item)}`}
-                      >
-                        {isValidNUmber(item[column.value]) ? (item[column.value] || item[column.value] === '' ? parseFloat(item[column.value]).toFixed(2): '') : item[column.value]}
-                      </td>
-                    )
-                  )}
-                </tr>
-              ))}
-            </MDBTableBody>
-          </MDBTable> */}
+
           <div className="hunter-search-filter-area">
             <div className='input-group date hunter-date-time-picker' id='datetimepicker1'>
+            {/* <MDBDataTableV5 hover entriesOptions={[10, 15]} entries={10} pagesAmount={4} data={datatable} fullPagination  /> */}
               {/* <MultiRangeSlider
               selectDateRange={selectDateRange}
             /> */}

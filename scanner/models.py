@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import pymongo
 from ib_insync import util
 import json
+import csv
 
 # from chartApis.common import get_chat_data_rsi_heik_v11
 # from financials.models import get_income_statement, get_balance_sheet, get_cash_statement
@@ -139,6 +140,28 @@ def get_ticker_details_fields_values(symbol, field_list):
     db_collection = news_db[DETAILS_COL_NAME]
     details = list(db_collection.find({'symbol': symbol}, fields))
     return details
+
+def get_data_from_csv():
+    file = open('scanner/The_ONE_DaviddTech_backtesting_results_1.csv')
+    csvreader = csv.reader(file)
+    header = next(csvreader)
+    rows = read_csvData()
+    return {'header': header, 'rows': rows}
+    # return list(reader)
+
+def read_csvData():
+    file = open('scanner/The_ONE_DaviddTech_backtesting_results_1.csv')
+    csvreader = csv.reader(file)
+    rows = []
+    header = next(csvreader)
+    for row in csvreader:
+        rowData = {}
+        for count, ele in enumerate(row):
+            e_key = header[count]
+            rowData[e_key] = ele
+        rows.append(rowData)
+    file.close()
+    return rows
 
 def get_available_items():
     news_db = mongoclient[NEWS]
@@ -327,7 +350,6 @@ def get_available_items():
         "total": fields_data["comment"],
         "defaults": fields_data["comment"]
     }
-
 
     return result
 

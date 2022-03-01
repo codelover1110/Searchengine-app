@@ -54,11 +54,18 @@ def ticker_details_fields(request):
 @csrf_exempt
 def available_items(request):
     print (" ++++++ API: /scanner/available_items ++++++")
+    available_items = scanner.get_available_items()
     try:
         available_items = scanner.get_available_items()
         return JsonResponse({"success": True, "result": available_items}, safe=True)
     except:
         return JsonResponse({"success": False, "message": "Failed to get available items for scanner!"}, safe=True)
+
+@csrf_exempt
+def get_searching_data(request):
+    print("+++++++API get_searching_data ++++++")
+    searching_data = scanner.get_data_from_csv()
+    return JsonResponse({"success": True, "result": searching_data})
 
 @csrf_exempt
 def multi_financials(request):

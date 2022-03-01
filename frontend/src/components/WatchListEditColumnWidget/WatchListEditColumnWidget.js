@@ -378,7 +378,7 @@ const WatchListEditColumnWidget = (props) => {
           });
         }    
 
-        const take_at = res.result.total;
+        const take_at = res.result.take_at;
         childNodes = [];
         take_at.total.map((node, index) => {
           childNodes.push({
@@ -397,7 +397,7 @@ const WatchListEditColumnWidget = (props) => {
           });
         }    
 
-        const comment = res.result.total;
+        const comment = res.result.comment;
         childNodes = [];
         comment.total.map((node, index) => {
           childNodes.push({

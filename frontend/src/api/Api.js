@@ -945,6 +945,30 @@ export const getScannerAllViewData = async (chart_number) => {
   }
 }
 
+export const getSearchingData = async () => {
+  const requestOptions = {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+  };
+
+  const apiURL = '/scanner/get_searching_data/'
+  try {
+    return await fetch(process.env.REACT_APP_BACKEND_URL + apiURL, requestOptions)
+    .then(response => response.json())
+    .then(data => {
+        return {
+          success: true,
+          data: data.result,
+        }
+      })
+  } catch (e) {
+    return {
+      success: false,
+      message: e
+    }
+  }
+}
+
 export const getSymbolsByMicroStrategy = async (macroStrat, microStrat) => {
   const requestOptions = {
     method: 'POST',
