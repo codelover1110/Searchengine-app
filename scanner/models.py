@@ -243,11 +243,11 @@ def get_available_items():
     result['buy_hold'] = {
         "total": [
             "Buy & Hold Return",
-            "Buy & Hold Return %	Commission Paid: All"
+            "Buy & Hold Return %"
         ],
         "defaults": [
             "Buy & Hold Return",
-            "Buy & Hold Return %	Commission Paid: All"
+            "Buy & Hold Return %"
         ]
     }
     result['commission_paid']     = {

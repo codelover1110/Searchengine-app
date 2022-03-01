@@ -11,7 +11,6 @@ const WatchListEditColumnWidget = (props) => {
   const handleCurrentNodesChanged = (nodes) => {
     setCurrentNodes(nodes);
     props.setColumns(nodes)
-    console.log("current nodes", nodes)
   };
 
   const handleVisible = (visibleStatus) => {
@@ -169,24 +168,24 @@ const WatchListEditColumnWidget = (props) => {
           });
         }
 
-        const losing_trade = res.result.losing_trade;
-        childNodes = [];
-        losing_trade.total.map((node, index) => {
-          childNodes.push({
-            label: node,
-            value: 'child_value_9_' + (index + 1),
-            default: losing_trade.defaults.includes(node) ? true : false,
-          });
-        });
+        // const losing_trade = res.result.losing_trade;
+        // childNodes = [];
+        // losing_trade.total.map((node, index) => {
+        //   childNodes.push({
+        //     label: node,
+        //     value: 'child_value_9_' + (index + 1),
+        //     default: losing_trade.defaults.includes(node) ? true : false,
+        //   });
+        // });
 
-        if (childNodes.length > 0) {
-          nodes.push({
-            label: 'Losing Trade',
-            value: 'parent_value_9',
-            children: childNodes,
-            default: true,
-          });
-        } 
+        // if (childNodes.length > 0) {
+        //   nodes.push({
+        //     label: 'Losing Trade',
+        //     value: 'parent_value_9',
+        //     children: childNodes,
+        //     default: true,
+        //   });
+        // } 
 
         const largest = res.result.largest;
         childNodes = [];

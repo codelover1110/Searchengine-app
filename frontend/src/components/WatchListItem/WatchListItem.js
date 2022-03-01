@@ -31,6 +31,7 @@ const WatchListItem = (props) => {
   const [isUpdatedCols, setIsUpdatedCols] = useState(false)
   const [columnItems, setColumnItems] = useState([])
   const [totalHeader, setTotalHeader] = useState([])
+  const [searchKey, setSearchKey] = useState('')
 
 
   const handleColumnsChange = () => {
@@ -38,8 +39,9 @@ const WatchListItem = (props) => {
   }
 
   const handleSearching = () => {
-    console.log("searching===========")
-    console.log(selectedColumns)
+    // console.log(searchKey)
+    // console.log(selectedColumns)
+    loadSearchingData(searchKey)
   }
 
   const handleModalClose = () => {
@@ -48,15 +50,18 @@ const WatchListItem = (props) => {
 
   useEffect(() => {
     setIsLoadedWatchListOptions(true)
-    loadSearchingData()
+    loadTableData(NaN)
   }, [])
 
-  const loadSearchingData =  async () => {
+  const loadTableData =  async (cols) => {
     const result = await getSearchingData();
     if (!result.success || result.data == undefined) return;
     setTotalHeader(result.data.header)
     let headerData = filterTableData(defaultFields)
-    const tableHeader = await hearder_columns(headerData);
+    if (cols) {
+      headerData = cols
+    }
+    const tableHeader = hearder_columns(headerData);
     let bodyData = result.data.rows
     bodyData.forEach(function (row, index) {
       for (let item in row) {
@@ -68,6 +73,36 @@ const WatchListItem = (props) => {
     setDatatable({
       columns: tableHeader,
       rows:bodyData
+    })
+    
+  }
+
+  const loadSearchingData =  async (keyString) => {
+    if (keyString == '') {
+      loadTableData(NaN);
+      return
+    } 
+    const result = await getSearchingData();
+    if (!result.success || result.data == undefined) return;
+    let headerData = columnItems
+    if (headerData.length == 0) {
+      headerData = filterTableData(defaultFields)
+    }
+    const tableHeader = hearder_columns(headerData);
+    let bodyData = result.data.rows
+    let searchingBody = []
+    bodyData.forEach(function (row, index) {
+      for (let item in row) {
+        if (row[item].includes(keyString)) {
+          searchingBody.push(row)
+          break
+        }
+      }
+    });
+
+    setDatatable({
+      columns: tableHeader,
+      rows:searchingBody
     })
     
   }
@@ -89,17 +124,11 @@ const WatchListItem = (props) => {
     rows: []
   })
 
-  // const [, setLoadingData] = useDatatableLoading()
 
   const updateCsvDownload = useCsvDownloadUpdate();
 
-  // const [, setDatatable] = useDatatable({
-  //   columns: hearder_columns,
-  //   rows: [
-  //   ],
-  // });
 
-  const hearder_columns = async (headerData) => {
+  const hearder_columns = (headerData) => {
     let table_header = []
     headerData.map(item => {
       if (item == 'Avg # Bars In Losing Trades: All') {
@@ -156,7 +185,10 @@ const WatchListItem = (props) => {
     setIsUpdatedCols(!isUpdatedCols)
     setColumnItems(cols)
     setSelectedColumns(columns)
+    loadTableData(cols)
+
   }
+  
 
   return (
     <div className="watch-list-item-container">
@@ -169,9 +201,7 @@ const WatchListItem = (props) => {
       </Modal>
       <div className="watch-list-item-wrap hunter-watch-list-item-wrap">
         <div className="watch-list-item-header">
-          <Input placeholder="Search..">
-
-          </Input>
+          <Input placeholder="Search.." onChange={ (event) => setSearchKey(event.target.value) } />
           <Button
             className=""
             onClick={() => { handleSearching() }}
@@ -191,19 +221,7 @@ const WatchListItem = (props) => {
           <Button className={"btn btn-primary py-2 my-0 hunter-csv-download-button"}>Csv Download</Button>
         </div>
         <div>
-          <MDBDataTableV5 hover entriesOptions={[10, 15]} entries={10} pagesAmount={4} data={datatable} fullPagination  />
-        </div>
-        <div className="watch-list-item-content">
-
-          <div className="hunter-search-filter-area">
-            <div className='input-group date hunter-date-time-picker' id='datetimepicker1'>
-            {/* <MDBDataTableV5 hover entriesOptions={[10, 15]} entries={10} pagesAmount={4} data={datatable} fullPagination  /> */}
-              {/* <MultiRangeSlider
-              selectDateRange={selectDateRange}
-            /> */}
-              {/* <ButtonCsvDownload filename={"price.csv"}>Csv Download</ButtonCsvDownload> */}
-            </div>
-          </div>
+          <MDBDataTableV5 hover entriesOptions={[10, 15, 20, 25, 30]} entries={10} pagesAmount={4} data={datatable} fullPagination  />
         </div>
       </div>
     </div>

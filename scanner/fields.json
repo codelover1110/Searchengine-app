@@ -17,11 +17,10 @@
         "Gross Profit %: Short",
         "Gross Profit: All",
         "Gross Profit: Long",
-        "Gross Profit: Short Largest"
+        "Gross Profit: Short"
     ],
     "losing_trade": [
-        "Losing Trade %: All Largest",
-        "Losing Trade %: Long"
+        "Losing Trade %: All"
     ],
     "largest": [
         "Largest Losing Trade %: Short",

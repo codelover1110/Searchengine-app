@@ -388,7 +388,7 @@ export const defaultFields = [
         default: true
       },
       {
-        label: "Buy & Hold Return %\tCommission Paid: All",
+        label: "Buy & Hold Return %",
         value: "child_value_5_2",
         default: true
       }
@@ -400,13 +400,18 @@ export const defaultFields = [
     value: "parent_value_6",
     children: [
       {
-        label: "Commission Paid: Long",
+        label: "Commission Paid: All",
         value: "child_value_6_1",
         default: true
       },
       {
-        label: "Commission Paid: Short",
+        label: "Commission Paid: Long",
         value: "child_value_6_2",
+        default: true
+      },
+      {
+        label: "Commission Paid: Short",
+        value: "child_value_6_3",
         default: true
       }
     ],
@@ -479,30 +484,30 @@ export const defaultFields = [
         default: true
       },
       {
-        label: "Gross Profit: Short Largest",
+        label: "Gross Profit: Short",
         value: "child_value_8_6",
         default: true
       }
     ],
     default: true
   },
-  {
-    label: "Losing Trade",
-    value: "parent_value_9",
-    children: [
-      {
-        label: "Losing Trade %: All Largest",
-        value: "child_value_9_1",
-        default: true
-      },
-      {
-        label: "Losing Trade %: Long",
-        value: "child_value_9_2",
-        default: true
-      }
-    ],
-    default: true
-  },
+  // {
+  //   label: "Losing Trade",
+  //   value: "parent_value_9",
+  //   children: [
+  //     {
+  //       label: "Losing Trade %: All",
+  //       value: "child_value_9_1",
+  //       default: true
+  //     },
+  //     {
+  //       label: "Losing Trade %: Long",
+  //       value: "child_value_9_2",
+  //       default: true
+  //     }
+  //   ],
+  //   default: true
+  // },
   {
     label: "Largest",
     value: "parent_value_10",

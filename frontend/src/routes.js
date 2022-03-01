@@ -97,12 +97,12 @@ export var routes = [
   //     }
   //   ],
   // },
-  // {
-  //   name: "Hybrid View",
-  //   icon: "tim-icons icon-video-66",
-  //   instance: "hybrid_view",
-  //   pathname: '/hybrid_view'
-  // },
+  {
+    name: "Scraping",
+    icon: "tim-icons icon-video-66",
+    instance: "Scraping",
+    pathname: '/search_engine'
+  },
   // {
   //   name: "Financial Data",
   //   icon: "tim-icons icon-coins",

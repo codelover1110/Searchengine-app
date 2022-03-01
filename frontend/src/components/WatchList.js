@@ -145,20 +145,6 @@ const WatchList = (props) => {
     history.push('/login')
   }
 
-  const displayChart = () => {
-    return (
-      <div className={`row ${calculateHeightStyle()}`}>
-        <div className={`watch-list col-sm-12 col-md-${calculateGridColumn()} graph-container`} >
-          <WatchListItem 
-            chart_number={1}
-            chartColumn={chartColumn.value}
-            allViewData={allViewData}
-            setAllViewData={setAllViewData}
-          />
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="hunter-chart-container">
@@ -173,36 +159,6 @@ const WatchList = (props) => {
             <li className="nav-item">
               <Link to={"/search_engine"} className="nav-link"></Link>
             </li>
-            {/* <div className="select-option">
-              <Select
-                value={chartColumn}
-                onChange={handleChartsColumnChange}
-                options={optionsColumn}
-                placeholder="Columns"
-              />
-            </div>
-            <div className="watch-list-nav-item">
-              <Button
-                size="sm"
-                color="danger"
-                onClick={async () => {
-                  const result = await saveScannerAllViewData(allViewData);
-                  if (result.success) alert('All fields saved successfully!!!');
-                }}
-              >
-                save layout
-              </Button>
-
-              <Button
-                size="sm"
-                color="danger"
-                onClick={() => {
-                  window.location.reload();
-                }}
-              >
-                load layout
-              </Button>
-            </div> */}
           </div>
         )}
         <Collapse navbar isOpen={collapseOpen}>
