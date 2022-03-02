@@ -24,26 +24,41 @@ def signup_view(request):
     if request.method == 'POST':
         request_data = JSONParser().parse(request)
         try:
-            signup_link = request_data['signup_path']
-            if SingupLinkRole.objects.get(link=signup_link) is not []:
-                pk = SingupLinkRole.objects.get(link=signup_link).pk
-                obj = SingupLinkRole.objects.get(pk=pk)
-                if not obj.expired:
-                    CustomUser.objects.create_user(
+            # signup_link = request_data['signup_path']
+            # if SingupLinkRole.objects.get(link=signup_link) is not []:
+            #     pk = SingupLinkRole.objects.get(link=signup_link).pk
+            #     obj = SingupLinkRole.objects.get(pk=pk)
+            #     if not obj.expired:
+            #         CustomUser.objects.create_user(
+            #             username=request_data['username'],
+            #             email=request_data['email'],
+            #             password=request_data['password1'],
+            #             first_name="",
+            #             last_name="",
+            #             role=obj.role,
+            #             is_active=True
+            #         )
+            #         user = CustomUser.objects.get(email=request_data['email'])
+            #         Token.objects.create(user=user)
+            #         obj.expired = True
+            #         obj.save()
+            #         return JsonResponse({'success': 'success'}, status=status.HTTP_201_CREATED)
+            CustomUser.objects.create_user(
                         username=request_data['username'],
                         email=request_data['email'],
                         password=request_data['password1'],
                         first_name="",
                         last_name="",
-                        role=obj.role,
+                        role="",
+                        is_superuser=1,
                         is_active=True
                     )
-                    user = CustomUser.objects.get(email=request_data['email'])
-                    Token.objects.create(user=user)
-                    obj.expired = True
-                    obj.save()
-                    return JsonResponse({'success': 'success'}, status=status.HTTP_201_CREATED)
-            return JsonResponse({'error': 'error', 'content': 'Invalid link'}, status=status.HTTP_409_CONFLICT)
+            user = CustomUser.objects.get(email=request_data['email'])
+            Token.objects.create(user=user)
+            # obj.expired = True
+            # obj.save()
+            return JsonResponse({'success': 'success'}, status=status.HTTP_201_CREATED)
+            # return JsonResponse({'error': 'error', 'content': 'Invalid link'}, status=status.HTTP_409_CONFLICT)
         except Exception as e:
             print (e, type(e))
             return JsonResponse({'error': 'error', 'content': e}, status=status.HTTP_409_CONFLICT)
@@ -128,3 +143,6 @@ def password_reset_confirm_view(request):
     except Exception as e:
         print (e, type(e))
         return JsonResponse({'success': False, 'content': 'some errors'}, status=status.HTTP_201_CREATED)
+
+def index(request):
+    return render(request, "build/index.html")

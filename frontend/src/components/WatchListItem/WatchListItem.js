@@ -11,7 +11,7 @@ import { useCsvDownloadUpdate } from "contexts/CsvDownloadContext"
 
 import { defaultFields, defaultItmes } from '../WatchListEditColumnWidget/components/modal/nodes'
 import ButtonCsvDownload from 'components/ButtonCsvDownload'
-import {useDatatableLoading, useDatatable, usePagination, usePaginationUpdate} from "contexts/DatatableContext"
+import { useDatatableLoading, useDatatable, usePagination, usePaginationUpdate } from "contexts/DatatableContext"
 import {
   getSearchingData
 } from 'api/Api';
@@ -32,6 +32,7 @@ const WatchListItem = (props) => {
   const [columnItems, setColumnItems] = useState([])
   const [totalHeader, setTotalHeader] = useState([])
   const [searchKey, setSearchKey] = useState('')
+  const [csvData, setCsvData] = useState([])
 
 
   const handleColumnsChange = () => {
@@ -53,7 +54,7 @@ const WatchListItem = (props) => {
     loadTableData(NaN)
   }, [])
 
-  const loadTableData =  async (cols) => {
+  const loadTableData = async (cols) => {
     const result = await getSearchingData();
     if (!result.success || result.data == undefined) return;
     setTotalHeader(result.data.header)
@@ -70,18 +71,19 @@ const WatchListItem = (props) => {
         }
       }
     });
+    setCsvData(bodyData)
     setDatatable({
       columns: tableHeader,
-      rows:bodyData
+      rows: bodyData
     })
-    
+
   }
 
-  const loadSearchingData =  async (keyString) => {
+  const loadSearchingData = async (keyString) => {
     if (keyString == '') {
       loadTableData(NaN);
       return
-    } 
+    }
     const result = await getSearchingData();
     if (!result.success || result.data == undefined) return;
     let headerData = columnItems
@@ -99,12 +101,12 @@ const WatchListItem = (props) => {
         }
       }
     });
-
+    setCsvData(searchingBody)
     setDatatable({
       columns: tableHeader,
-      rows:searchingBody
+      rows: searchingBody
     })
-    
+
   }
 
   const filterTableData = (filterData) => {
@@ -123,9 +125,6 @@ const WatchListItem = (props) => {
     columns: [],
     rows: []
   })
-
-
-  const updateCsvDownload = useCsvDownloadUpdate();
 
 
   const hearder_columns = (headerData) => {
@@ -188,7 +187,7 @@ const WatchListItem = (props) => {
     loadTableData(cols)
 
   }
-  
+
 
   return (
     <div className="watch-list-item-container">
@@ -201,7 +200,7 @@ const WatchListItem = (props) => {
       </Modal>
       <div className="watch-list-item-wrap hunter-watch-list-item-wrap">
         <div className="watch-list-item-header">
-          <Input placeholder="Search.." onChange={ (event) => setSearchKey(event.target.value) } />
+          <Input placeholder="Search.." onChange={(event) => setSearchKey(event.target.value)} />
           <Button
             className=""
             onClick={() => { handleSearching() }}
@@ -215,13 +214,13 @@ const WatchListItem = (props) => {
           >
             change columns
           </Button>
-          
+
         </div>
         <div className={"d-flex align-items-center"}>
-          <Button className={"btn btn-primary py-2 my-0 hunter-csv-download-button"}>Csv Download</Button>
+          <CSVLink data={csvData} filename="search_result.csv" className={"btn btn-primary py-2 my-0 hunter-csv-download-button"}>Csv Download</CSVLink>
         </div>
         <div>
-          <MDBDataTableV5 hover entriesOptions={[10, 15, 20, 25, 30]} entries={10} pagesAmount={4} data={datatable} fullPagination  />
+          <MDBDataTableV5 hover entriesOptions={[10, 15, 20, 25, 30]} entries={10} pagesAmount={4} data={datatable} fullPagination />
         </div>
       </div>
     </div>

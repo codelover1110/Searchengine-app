@@ -40,8 +40,9 @@ CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:80',
     'https://caats.ngrok.io',
     'http://localhost:8000',
-    'https://493a48cf7dda.ngrok.io',
-    'http://backtesttrading.eastus.cloudapp.azure.com:8000'
+    'http://1f6f-23-237-32-34.ngrok.io',
+    'http://backtesttrading.eastus.cloudapp.azure.com:8000',
+    'http://140.82.21.82:5000'
 )
 
 

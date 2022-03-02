@@ -118,9 +118,9 @@ const Login = () => {
                 </button>
                 
                 <div className="form-group hunter-form-signup-area">
-                    {/* <p className="sign-up-area text-left">
+                    <p className="sign-up-area text-left">
                         <a href="/signup">Sign Up?</a>
-                    </p> */}
+                    </p>
                     <p className="forgot-password text-right">
                         Forgot <a href="/forgot_password">password?</a>
                     </p>

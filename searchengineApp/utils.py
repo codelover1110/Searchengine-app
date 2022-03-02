@@ -21,7 +21,7 @@ def send_phone(user_code, phone_number):
     print(message.sid)
 
 def send_email(user_code, user_email):
-    subject = 'Verification Code'
+    subject = 'Verification Code (Search Engine Support)'
     message = user_code
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [user_email,]

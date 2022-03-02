@@ -56,7 +56,7 @@ function AdminNavbar() {
     <nav className="navbar navbar-expand navbar-dark bg-dark hunter-nav-bar">
       <div className="logo-title">
         <a href="/chart" className="hunter-navbar-brand">
-          Violette AM - Client Portal
+          Search Engine
         </a>
       </div>
       <Navbar className={classNames("navbar-absolute", color)} expand="lg">

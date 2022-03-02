@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include, re_path
-from .views import auth_view, verify_view, signup_view, password_reset_view, password_reset_confirm_view
+from .views import auth_view, verify_view, signup_view, password_reset_view, password_reset_confirm_view, index
 # from strategy import views as strategy_view
 # from news import views as news_view
 # from financials import views as financials_view
@@ -16,6 +16,9 @@ urlpatterns = [
     path('signup/', signup_view, name='signup-view'),
     path('password_reset/', password_reset_view, name='password-reset-view'),
     path('password_reset_confirm/', password_reset_confirm_view, name='password-reset-confirm-view'),
+    path('', index, name='index'),
+
+    # url(r'', index, name='index'),
     
     # ################ strategy api ################
     # path('strategy/parameter_list/', strategy_view.parameter_list, name='parameter-list'),

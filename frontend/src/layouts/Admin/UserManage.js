@@ -104,13 +104,13 @@ function UserManage() {
           role: user.is_superuser ? 'Super User' : user.role,
           active: 'active',
           action: <div className="hunter-user-manage-button-area">
-            <MDBBtn color="blue" size="sm" onClick={
+            {/* <MDBBtn color="blue" size="sm" onClick={
             () => {
               setRoles([]);
               setSelectedUserId(user.id);
               showUpdateUserRoleModal();
             }}
-            >Update Role</MDBBtn>
+            >Update Role</MDBBtn> */}
             <MDBBtn color="blue" size="sm" onClick={
             async () => {
               if (window.confirm("Do you really want to delete this user?")) {

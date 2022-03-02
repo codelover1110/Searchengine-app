@@ -136,11 +136,11 @@ export var adminRoutes = [
     instance: "usermanage",
     pathname: '/admin/usermanage'
   },
-  {
-    name: "Link Manage",
-    icon: "tim-icons icon-attach-87",
-    instance: "linkmanage",
-    pathname: '/admin/linkmanage'
-  },
+  // {
+  //   name: "Link Manage",
+  //   icon: "tim-icons icon-attach-87",
+  //   instance: "linkmanage",
+  //   pathname: '/admin/linkmanage'
+  // },
 ]
 
