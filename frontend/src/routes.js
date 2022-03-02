@@ -97,12 +97,12 @@ export var routes = [
   //     }
   //   ],
   // },
-  {
-    name: "Scraping",
-    icon: "tim-icons icon-video-66",
-    instance: "Scraping",
-    pathname: '/search_engine'
-  },
+  // {
+  //   name: "Scraping",
+  //   icon: "tim-icons icon-video-66",
+  //   instance: "Scraping",
+  //   pathname: '/search_engine'
+  // },
   // {
   //   name: "Financial Data",
   //   icon: "tim-icons icon-coins",
@@ -121,12 +121,12 @@ export var routes = [
   //   instance: "floats",
   //   pathname: '/floats'
   // },
-  // {
-  //   name: "News",
-  //   icon: "tim-icons icon-atom",
-  //   instance: "news_data",
-  //   pathname: '/news_data'
-  // },
+  {
+    name: "User Manager",
+    icon: "tim-icons icon-atom",
+    instance: "admin",
+    pathname: '/admin'
+  },
 ]
 
 export var adminRoutes = [
@@ -136,6 +136,19 @@ export var adminRoutes = [
     instance: "usermanage",
     pathname: '/admin/usermanage'
   },
+  {
+    name: "Search Engine",
+    icon: "tim-icons icon-camera-18",
+    instance: "search_engine",
+    pathname: '/search_engine'
+  },
+  // {
+  //   name: "Scraping",
+  //   icon: "tim-icons icon-video-66",
+  //   instance: "Scraping",
+  //   pathname: '/search_engine'
+  // },
+
   // {
   //   name: "Link Manage",
   //   icon: "tim-icons icon-attach-87",

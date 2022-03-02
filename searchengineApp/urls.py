@@ -13,10 +13,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('signin/', auth_view, name='login-view'),
     path('verify/',  verify_view, name='verify-view'),
-    path('signup/', signup_view, name='signup-view'),
+    path('register/', signup_view, name='signup-view'),
     path('password_reset/', password_reset_view, name='password-reset-view'),
     path('password_reset_confirm/', password_reset_confirm_view, name='password-reset-confirm-view'),
-    path('', index, name='index'),
+    # path('', index, name='index'),
 
     # url(r'', index, name='index'),
     
@@ -80,6 +80,7 @@ urlpatterns = [
     
     # app api
     url(r'^', include('users.urls')),
+    url(r'', index)
     # url(r'^', include('chartApis.urls')),
     # url(r'^', include('strategy.urls')),
 ]

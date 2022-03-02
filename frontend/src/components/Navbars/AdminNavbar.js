@@ -55,7 +55,7 @@ function AdminNavbar() {
   return (
     <nav className="navbar navbar-expand navbar-dark bg-dark hunter-nav-bar">
       <div className="logo-title">
-        <a href="/chart" className="hunter-navbar-brand">
+        <a href="/search_engine" className="hunter-navbar-brand">
           Search Engine
         </a>
       </div>

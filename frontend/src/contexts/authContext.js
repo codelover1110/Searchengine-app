@@ -43,7 +43,7 @@ const authUser = {
       signup_path: process.env.REACT_APP_BACKEND_URL + pathname
     }
     
-    return await fetch(process.env.REACT_APP_BACKEND_URL + '/signup/', {
+    return await fetch(process.env.REACT_APP_BACKEND_URL + '/register/', {
       method: "POST",
       body: JSON.stringify(formData)
     })
